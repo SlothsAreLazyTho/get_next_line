@@ -6,7 +6,7 @@
 /*   By: cbijman <cbijman@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/08 11:01:14 by cbijman       #+#    #+#                 */
-/*   Updated: 2022/11/28 18:05:18 by cbijman       ########   odam.nl         */
+/*   Updated: 2022/11/30 16:32:22 by cbijman       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ size_t	ft_strlen_limiter(const char *str, char limiter)
 		limiter = '\0';
 	while (str[size] != limiter && str[size])
 		size++;
+	if(str[size] == '\n')
+		size++;
 	return (size);
 }
 
@@ -38,7 +40,8 @@ char	*ft_calloc(int count, int type)
 	return (str);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+//S1 is the left string and s2 the buffer.
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*str;
 	size_t	i;
@@ -55,6 +58,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	i = 0;
 	while (s2[i])
 		str[j++] = s2[i++];
+	str[j] = '\0';
+	free(s1);
 	return (str);
 }
 
@@ -78,17 +83,15 @@ char	*ft_strdup(const char *str)
 	return (nstr);
 }
 
-char	*ft_substr(const char *str, int start, size_t len)
+char	*ft_substr(const char *str, int start, int len)
 {
-	size_t	i;
-	size_t	strlen;
+	int		i;
+	int		strlen;
 	char	*nstr;
 
 	i = 0;
 	strlen = ft_strlen_limiter(str, 0);
 	nstr = ft_calloc(len, sizeof(char));
-	if (start >= len)
-		return (ft_strdup("\0"));
 	while (i < len)
 	{
 		nstr[i] = str[i + start];
