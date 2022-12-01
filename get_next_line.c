@@ -16,8 +16,9 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-int	has_newline(const char *s)
+int		has_newline(const char *s)
 {
 	size_t	i;
 
@@ -50,23 +51,42 @@ char	*read_line(int fd, char *line)
 	return (line);
 }
 
-char *take_left(char *str)
+char	*take_string(char *str)
 {
 	int		i;
 	char	*nstr;
+
+	i = 0;
 	while(str[i] != '\n' && str[i])
 		i++;
 	if (str[i] == '\0')
-	{
-		printf("Line: %s", str);
 		return (NULL);
-	}
 	i++;
-	nstr = ft_strdup(&str[i]);
+	nstr = ft_calloc(i, sizeof(char));
 	if (!nstr)
 		return (NULL);
+	strncpy(nstr, str, i); //Integrate to utils
 	free(str);
-	printf("%s", nstr);
+	return (nstr);
+}
+
+char	*take_left(char *str)
+{
+	int		i;
+	int		j;
+	char	*nstr;
+
+	i = 0;
+	j = 0;
+	while(str[i] != '\n' && str[i])
+		i++;
+	if (str[i] == '\0')
+		return (NULL);
+	i++;
+	nstr = ft_calloc(i, sizeof(char));
+	if (!nstr)
+		return (NULL);
+	strcpy(nstr, &str[i]); //Integrate to utils
 	return (nstr);
 }
 
@@ -82,11 +102,10 @@ char	*get_next_line(int fd)
 		line = ft_strdup("\0");
 	i = 0;
 	buff = read_line(fd, line);
-	
+	if (!buff)
+		return (NULL);
 	line = take_left(buff);
-	//buff = ft_substr(buff, 0, ft_strlen_limiter(buff, '\n'));
-	printf("%s\n", buff);
-	printf("Left: { %s }", line);
+	buff = take_string(buff);
 	return (buff);
 }
 
@@ -94,11 +113,11 @@ int	main(void)
 {
 	int		fd = open("./assets/test01.txt", O_RDONLY);
 	char	*line;
-	for(int i = 0; i < 1; i++)
+	for(int i = 0; i < 5; i++)
 	{
 		line = get_next_line(fd);
-		//printf("Line: %s", line);
-		free(line);	
+		printf("Line: %s", line);
+		free(line);
 	}
 	//system("leaks get_next_line");
 	return (0);
