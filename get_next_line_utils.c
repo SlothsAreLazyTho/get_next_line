@@ -6,7 +6,7 @@
 /*   By: cbijman <cbijman@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/08 11:01:14 by cbijman       #+#    #+#                 */
-/*   Updated: 2022/11/30 16:32:22 by cbijman       ########   odam.nl         */
+/*   Updated: 2022/12/05 11:44:19 by cbijman       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ size_t	ft_strlen_limiter(const char *str, char limiter)
 		limiter = '\0';
 	while (str[size] != limiter && str[size])
 		size++;
-	if(str[size] == '\n')
+	if (str[size] == '\n')
 		size++;
 	return (size);
 }
@@ -59,7 +59,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	while (s2[i])
 		str[j++] = s2[i++];
 	str[j] = '\0';
-	free(s1); //Free older string!
+	free(s1);
 	return (str);
 }
 
