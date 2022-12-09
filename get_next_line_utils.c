@@ -3,99 +3,73 @@
 /*                                                        ::::::::            */
 /*   get_next_line_utils.c                              :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: cbijman <cbijman@student.codam.nl>           +#+                     */
+/*   By: bowie <bowie@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/11/08 11:01:14 by cbijman       #+#    #+#                 */
-/*   Updated: 2022/12/05 11:44:19 by cbijman       ########   odam.nl         */
+/*   Created: 2022/12/08 17:01:36 by bowie         #+#    #+#                 */
+/*   Updated: 2022/12/09 13:15:30 by bowie         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-#include <stdlib.h>
-
-size_t	ft_strlen_limiter(const char *str, char limiter)
+size_t	ft_strlcpy(char *dst, char *src, size_t size)
 {
-	size_t	size;
-
-	size = 0;
-	if (!limiter)
-		limiter = '\0';
-	while (str[size] != limiter && str[size])
-		size++;
-	if (str[size] == '\n')
-		size++;
-	return (size);
-}
-
-char	*ft_calloc(int count, int type)
-{
-	char	*str;
-
-	str = (char *)malloc(count * type);
-	if (!str)
-		return (NULL);
-	while (count--)
-		str[count] = 0;
-	return (str);
-}
-
-//S1 is the left string and s2 the buffer.
-char	*ft_strjoin(char *s1, char *s2)
-{
-	char	*str;
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	j = 0;
-	str = ft_calloc((ft_strlen_limiter(s1, '\0')
-				+ ft_strlen_limiter(s2, '\0') + 1), sizeof(char));
-	if (!str)
-		return (NULL);
-	while (s1[i])
-		str[j++] = s1[i++];
-	i = 0;
-	while (s2[i])
-		str[j++] = s2[i++];
-	str[j] = '\0';
-	free(s1);
-	return (str);
-}
-
-char	*ft_strdup(const char *str)
-{
-	char	*nstr;
 	size_t	i;
 	size_t	len;
 
-	if (!str)
-		return (NULL);
-	len = 0;
-	i = -1;
-	while (str[len])
-		len++;
-	nstr = ft_calloc(len + 1, sizeof(char));
-	if (!nstr)
-		return (NULL);
-	while (str[++i])
-		nstr[i] = str[i];
-	return (nstr);
-}
-
-char	*ft_substr(const char *str, int start, int len)
-{
-	int		i;
-	int		strlen;
-	char	*nstr;
-
 	i = 0;
-	strlen = ft_strlen_limiter(str, 0);
-	nstr = ft_calloc(len, sizeof(char));
-	while (i < len)
+	len = ft_strlen(src);
+	if (size == 0)
+		return (len);
+	while (src[i] && --size)
 	{
-		nstr[i] = str[i + start];
+		dst[i] = src[i];
 		i++;
 	}
-	return (nstr);
+	dst[i] = '\0';
+	return (len);
+}
+
+size_t	ft_strlen(char *str)
+{
+	size_t	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
+char	*ft_strjoin_free(char *s1, char *s2)
+{
+	char	*newstr;
+	size_t	i;
+	size_t	j;
+
+	if (!s1 && !s2)
+		return (NULL);
+	newstr = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!newstr)
+		return (free(newstr), NULL);	
+	i = 0;
+	j = 0;
+	while (s1[i])
+		newstr[j++] = s1[i++];
+	i = 0;
+	while (s2[i])
+		newstr[j++] = s2[i++];
+	newstr[j] = '\0';
+	free(s1);
+	return (newstr);
+}
+
+char	*ft_empty_string(void)
+{
+	char	*str;
+
+	str = malloc(1);
+	if (!str)
+		return (NULL);
+	str[0] = '\0';
+	return (str);
 }
