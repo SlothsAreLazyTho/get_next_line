@@ -6,7 +6,7 @@
 /*   By: cbijman <cbijman@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/07 18:51:27 by cbijman       #+#    #+#                 */
-/*   Updated: 2022/11/30 16:32:49 by cbijman       ########   odam.nl         */
+/*   Updated: 2022/12/09 16:12:48 by cbijman       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 
 char	*get_next_line(int fd);
 char	*ft_strjoin_free(char *s1, char *s2);
-size_t	ft_strlcpy(char *dst, char *src, size_t size);
 char	*ft_empty_string(void);
+char	*ft_strcpy(char *s1, char *s2);
 size_t	ft_strlen(char *str);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   get_next_line_utils.c                              :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: bowie <bowie@student.codam.nl>               +#+                     */
+/*   By: cbijman <cbijman@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/12/08 17:01:36 by bowie         #+#    #+#                 */
-/*   Updated: 2022/12/09 13:37:53 by bowie         ########   odam.nl         */
+/*   Created: 2022/12/09 17:50:08 by cbijman       #+#    #+#                 */
+/*   Updated: 2022/12/09 17:50:10 by cbijman       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*ft_strjoin_free(char *s1, char *s2)
 		return (NULL);
 	newstr = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!newstr)
-		return (free(newstr), NULL);
+		return (free(s1), NULL);
 	i = 0;
 	j = 0;
 	while (s1[i])
@@ -43,6 +43,16 @@ char	*ft_strjoin_free(char *s1, char *s2)
 	newstr[j] = '\0';
 	free(s1);
 	return (newstr);
+}
+
+char	*ft_strcpy(char *s1, char *s2)
+{
+	return (strcpy(s1, s2));
+}
+
+char	*ft_strrchr(char *s1, char s)
+{
+	return (strrchr(s1, s));
 }
 
 char	*ft_empty_string(void)

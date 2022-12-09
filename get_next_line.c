@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   get_next_line.c                                    :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: bowie <cbijman@student.codam.nl>             +#+                     */
+/*   By: cbijman <cbijman@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/12/08 17:01:38 by cbijman       #+#    #+#                 */
-/*   Updated: 2022/12/09 14:28:24 by bowie         ########   odam.nl         */
+/*   Created: 2022/12/09 17:49:58 by cbijman       #+#    #+#                 */
+/*   Updated: 2022/12/09 17:50:56 by cbijman       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,13 @@ char	*read_line(int fd, char *line)
 	char	buffer[BUFFER_SIZE + 1];
 	int		s;
 
+	if (!line)
+		line = ft_empty_string();
+	if (!line)
+		return (NULL);
+	buffer[0] = '\0';
 	s = 1;
-	while (s != 0 && !strchr(buffer, '\n'))
+	while (s != 0 && !strrchr(buffer, '\n'))
 	{
 		s = read(fd, buffer, BUFFER_SIZE);
 		if (s < 0)
@@ -26,7 +31,7 @@ char	*read_line(int fd, char *line)
 		buffer[s] = '\0';
 		line = ft_strjoin_free(line, buffer);
 		if (!line)
-			return (free(line), NULL);
+			return (NULL);
 	}
 	if (!line[0])
 		return (free(line), NULL);
@@ -77,14 +82,13 @@ char	*take_left(char *str)
 	len = 0;
 	while (str[i] != '\n' && str[i])
 		i++;
-	if (str[i] == '\0')
-		return (NULL);
-	i++;
+	if (str[i] == '\n')
+		i++;
 	len = ft_strlen(&str[i]);
 	nstr = malloc(len + 1);
 	if (!nstr)
-		return (NULL);
-	strcpy(nstr, str + i); //Write simple strcpy method.
+		return (free(str), NULL);
+	ft_strcpy(nstr, str + i);
 	free(str);
 	return (nstr);
 }
@@ -96,25 +100,27 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE < 0 || BUFFER_SIZE > __INT_MAX__)
 		return (NULL);
-	if (!line)
-		line = ft_empty_string();
 	line = read_line(fd, line);
 	if (!line)
 		return (NULL);
 	buff = take_string(line);
 	if (!buff)
-		return (free(line), NULL);
+	{
+		free (line);
+		line = NULL;
+		return (NULL);
+	}
 	line = take_left(line);
 	return (buff);
 }
 
-//int	main()
+//int	main(void)
 //{
 //	int		fd;
 //	char	*line;
 
 //	fd = open("./assets/test01.txt", O_RDONLY);
-//	for (int i = 0; i < 2; i++)
+//	for (int i = 0; i < 20; i++)
 //	{
 //		line = get_next_line(fd);
 //		printf("Line: %s", line);
@@ -122,6 +128,7 @@ char	*get_next_line(int fd)
 //			printf("\n");
 //		free(line);
 //	}
+//	//system("leaks a.out");
 //	close(fd);
 //	return (0);
 //}
