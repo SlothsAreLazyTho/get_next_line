@@ -27,6 +27,7 @@
 
 char	*get_next_line(int fd);
 char	*ft_strjoin_free(char *s1, char *s2);
+size_t	ft_strlcpy(char *dst, char *src, size_t size);
 char	*ft_empty_string(void);
 size_t	ft_strlen(char *str);
 

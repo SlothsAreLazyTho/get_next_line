@@ -6,7 +6,7 @@
 /*   By: bowie <cbijman@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/12/08 17:01:38 by cbijman       #+#    #+#                 */
-/*   Updated: 2022/12/09 13:19:41 by bowie         ########   odam.nl         */
+/*   Updated: 2022/12/09 14:28:24 by bowie         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,16 @@ char	*read_line(int fd, char *line)
 		buffer[s] = '\0';
 		line = ft_strjoin_free(line, buffer);
 		if (!line)
-			return (NULL);
+			return (free(line), NULL);
 	}
+	if (!line[0])
+		return (free(line), NULL);
 	return (line);
 }
 
-//Take string takes a complete string and convert it. Because we have to 
+//Takes a complete string and convert it. Because we have to 
 //Remember to copy our newline to the string we must check if the string
-//have a new line, if not we just add 1 for the zero-terminator.
+//has a new line, if not we just add 1 for the zero-terminator.
 char	*take_string(char *str)
 {
 	size_t	i;
@@ -73,7 +75,7 @@ char	*take_left(char *str)
 
 	i = 0;
 	len = 0;
-	while (str[i] != '\n' && str[i]) //Changing index to end of newline.
+	while (str[i] != '\n' && str[i])
 		i++;
 	if (str[i] == '\0')
 		return (NULL);
@@ -106,7 +108,7 @@ char	*get_next_line(int fd)
 	return (buff);
 }
 
-//int	main(int argc, char const *argv[])
+//int	main()
 //{
 //	int		fd;
 //	char	*line;

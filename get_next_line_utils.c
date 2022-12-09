@@ -6,29 +6,11 @@
 /*   By: bowie <bowie@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/12/08 17:01:36 by bowie         #+#    #+#                 */
-/*   Updated: 2022/12/09 13:15:30 by bowie         ########   odam.nl         */
+/*   Updated: 2022/12/09 13:37:53 by bowie         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-size_t	ft_strlcpy(char *dst, char *src, size_t size)
-{
-	size_t	i;
-	size_t	len;
-
-	i = 0;
-	len = ft_strlen(src);
-	if (size == 0)
-		return (len);
-	while (src[i] && --size)
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (len);
-}
 
 size_t	ft_strlen(char *str)
 {
@@ -50,7 +32,7 @@ char	*ft_strjoin_free(char *s1, char *s2)
 		return (NULL);
 	newstr = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!newstr)
-		return (free(newstr), NULL);	
+		return (free(newstr), NULL);
 	i = 0;
 	j = 0;
 	while (s1[i])
