@@ -6,7 +6,7 @@
 /*   By: cbijman <cbijman@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/12/09 17:49:58 by cbijman       #+#    #+#                 */
-/*   Updated: 2022/12/09 17:50:56 by cbijman       ########   odam.nl         */
+/*   Updated: 2022/12/12 12:16:05 by cbijman       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*read_line(int fd, char *line)
 		return (NULL);
 	buffer[0] = '\0';
 	s = 1;
-	while (s != 0 && !strrchr(buffer, '\n'))
+	while (s != 0 && !ft_strrchr(buffer, '\n'))
 	{
 		s = read(fd, buffer, BUFFER_SIZE);
 		if (s < 0)
@@ -106,29 +106,10 @@ char	*get_next_line(int fd)
 	buff = take_string(line);
 	if (!buff)
 	{
-		free (line);
+		free(line);
 		line = NULL;
 		return (NULL);
 	}
 	line = take_left(line);
 	return (buff);
 }
-
-//int	main(void)
-//{
-//	int		fd;
-//	char	*line;
-
-//	fd = open("./assets/test01.txt", O_RDONLY);
-//	for (int i = 0; i < 20; i++)
-//	{
-//		line = get_next_line(fd);
-//		printf("Line: %s", line);
-//		if (!line)
-//			printf("\n");
-//		free(line);
-//	}
-//	//system("leaks a.out");
-//	close(fd);
-//	return (0);
-//}

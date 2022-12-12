@@ -6,13 +6,13 @@
 /*   By: cbijman <cbijman@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/12/09 17:50:08 by cbijman       #+#    #+#                 */
-/*   Updated: 2022/12/09 17:50:10 by cbijman       ########   odam.nl         */
+/*   Updated: 2022/12/12 12:11:46 by cbijman       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(char *str)
+size_t	ft_strlen(const char *str)
 {
 	size_t	i;
 
@@ -47,12 +47,31 @@ char	*ft_strjoin_free(char *s1, char *s2)
 
 char	*ft_strcpy(char *s1, char *s2)
 {
-	return (strcpy(s1, s2));
+	size_t	i;
+
+	i = 0;
+	if (!s2)
+		return (NULL);
+	while (s2[i])
+	{
+		s1[i] = s2[i];
+		i++;
+	}
+	s1[i] = '\0';
+	return (s1);
 }
 
-char	*ft_strrchr(char *s1, char s)
+char	*ft_strrchr(const char *s1, char c)
 {
-	return (strrchr(s1, s));
+	int	len;
+
+	len = ft_strlen(s1);
+	if (s1[len] == (char) c)
+		return ((char *)&s1[len]);
+	while (len--)
+		if (s1[len] == (char) c)
+			return ((char *)&s1[len]);
+	return (0);
 }
 
 char	*ft_empty_string(void)
